@@ -1,3 +1,7 @@
 termsBtn:
   type: "id"
   value: "com.maaii.test:id/btn_terms"
+
+termsTitle:
+  type: "xpath"
+  value: "//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]"
