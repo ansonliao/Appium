@@ -1,0 +1,9 @@
+terms_btn:
+  type: "id"
+  value: "com.maaii.test:id/btn_terms"
+  desc: "First Page --> Terms Button"
+
+policy_btn:
+  type: "id"
+  value: "com.maaii.test:id/btn_policy"
+  desc: "First Page --> Privacy Policy Button"

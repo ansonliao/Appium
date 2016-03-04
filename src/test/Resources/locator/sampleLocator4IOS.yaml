@@ -1,0 +1,7 @@
+btns:
+  type: "name"
+  value: "Buttons"
+
+xbtn:
+  type: "name"
+  value: "error"

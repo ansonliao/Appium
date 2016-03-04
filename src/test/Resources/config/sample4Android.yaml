@@ -1,0 +1,6 @@
+deviceName: "Nexus_5"
+app: "ApiDemos-debug.apk"
+appDir: "/Users/cpuser/Desktop"
+locatorYaml:
+imageSimilar: -1
+waitingTime: 7

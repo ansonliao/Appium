@@ -1,0 +1,27 @@
+loginBtn:
+  type: "linkText"
+  value: "登录"
+
+loginUser:
+  type: "xpath"
+  value: "/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/input"
+
+loginPWD:
+  type: "xpath"
+  value: "/html/body/div[3]/div[2]/div[3]/div[1]/div[3]/input[1]"
+
+loginSubmit:
+  type: "xpath"
+  value: "/html/body/div[3]/div[2]/div[3]/div[1]/div[4]/span"
+
+myAccount:
+  type: "className"
+  value: "userMsg"
+
+myOrder:
+  type: "linkText"
+  value: "我的订单"
+
+orderItem:
+  type: "className"
+  value: "itemTitle"

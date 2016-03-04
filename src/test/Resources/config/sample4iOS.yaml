@@ -1,0 +1,7 @@
+deviceName: "iPhone Simulator"
+platformVersion: "9.0"
+app: "UICatalog.app"
+appDir: "src/test/Resources"
+locatorYaml: "src/test/Resources/locator/sampleLocator4IOS.yaml"
+imageSimilar: -1
+waitingTime: 7000

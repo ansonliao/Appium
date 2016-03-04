@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Sample for selenium test in web" parallel="classes">
+    <test name="Sample for selenium test in web">
+        <classes>
+            <class name="WEB.ExtendWebDriverDemo" />
+            <class name="WEB.ExtendWebDriverDemo2" />
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="com.maaii.automation.exception.ScreenshotListerOnFailure" />
+    </listeners>
+    <usedefaultlisteners name="false" />
+</suite> <!-- Suite -->

@@ -1,0 +1,5 @@
+browserName: "Firefox"
+url: "http://www.google.com/"
+locatorYaml: "src/test/Resources/locator/google.yaml"
+imageSimilar: -1
+waitingTime: 7000

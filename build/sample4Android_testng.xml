@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Sample for IOS test in Appium" parallel="false">
+    <test name="Sample for IOS test in Appium">
+        <classes>
+            <class name="ANDROID.maaiiTest" />
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="com.maaii.automation.commons.ScreenShotOnFailure" />
+        <listener class-name="org.uncommons.reportng.HTMLReporter" />
+        <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+    </listeners>
+    <usedefaultlisteners name="false" />
+</suite> <!-- Suite -->

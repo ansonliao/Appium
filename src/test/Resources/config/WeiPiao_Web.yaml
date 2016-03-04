@@ -1,0 +1,5 @@
+browserName: "Firefox"
+url: "http://www.wepiao.com/"
+locatorYaml: "src/test/Resources/locator/WeiPiao.yaml"
+imageSimilar: -1
+waitingTime: 7000

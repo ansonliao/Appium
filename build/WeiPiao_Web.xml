@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="Sample for selenium test in web" parallel="false">
+    <test name="Sample for selenium test in web">
+        <classes>
+            <class name="WEB.demo" />
+        </classes>
+    </test>
+    <listeners>
+        <listener class-name="com.cpa.qa.commons.ScreenShotOnFailure" />
+        <listener class-name="org.uncommons.reportng.HTMLReporter" />
+        <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+    </listeners>
+    <usedefaultlisteners name="false" />
+</suite> <!-- Suite -->

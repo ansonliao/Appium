@@ -1,0 +1,14 @@
+kwInputField:
+  type: "name"
+  value: "q"
+  desc: "Home --> Search input field"
+
+searchBtn:
+  type: "name"
+  value: "btnK"
+  desc: "Home --> Search button"
+
+newItemInput:
+  type: "class"
+  value: "new-todo"
+  desc: "Home --> New TODO item Input Field"
