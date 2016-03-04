@@ -1,6 +1,4 @@
-deviceName: "Nexus_5"
-app: "ApiDemos-debug.apk"
-appDir: "/Users/cpuser/Desktop"
+deviceName: "emulator-5554"
+app: "Maaii.apk"
+appDir: "app"
 locatorYaml:
-imageSimilar: -1
-waitingTime: 7

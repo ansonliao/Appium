@@ -1,5 +1,9 @@
 package com.maaii.automation.page;
 
+import com.maaii.automation.android.AndroidDriverManager;
+import com.maaii.automation.android.AndroidDriverWait;
+import com.maaii.automation.android.ExpectedConditionForAndroid;
+import com.maaii.automation.commons.KeyWord;
 import com.maaii.automation.commons.Variables;
 import com.maaii.automation.exception.IllegalLocatorIndexException;
 import com.maaii.automation.exception.LocatorDisplayException;
@@ -9,6 +13,7 @@ import com.maaii.automation.file.YamlParser;
 import com.maaii.automation.selenium.ExtendWebElement;
 import com.maaii.automation.selenium.WebDriverManager;
 import io.appium.java_client.MobileBy;
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,6 +33,14 @@ public class Page1 {
     private static String locatorYamlFile = null;
     private Map locatorMap = null;
 
+    private static final String WEBTESTTYPE = "WEB";
+    private static final String IOSTESTTYPE = "IOS";
+    private static final String ANDROIDTESTTYPE = "ANDROID";
+
+    private static final String LOCATORTYPE = "type";
+    private static final String LOCATORVALUE = "value";
+    private static final String LOCATORINDEX = "index";
+    private static final String LOCATORDESC = "desc";
 
     public Page1(String file) throws IOException {
         this.confYamlFile = file;
@@ -114,16 +127,16 @@ public class Page1 {
         Map map = YamlParser.getLocatorMap(this.locatorMap, key);
 
         // get element's key and value
-        type = YamlParser.getKeyValue(map, "type");
-        value = YamlParser.getKeyValue(map, "value");
+        type = YamlParser.getKeyValue(map, KeyWord.toStrLower(KeyWord.TYPE));
+        value = YamlParser.getKeyValue(map, KeyWord.toStrLower(KeyWord.VALUE));
         // get element index
-        if (map.containsKey("index")) {
-            index = Integer.parseInt(map.get("index").toString()) - 1;
+        if (map.containsKey(KeyWord.toStrLower(KeyWord.INDEX))) {
+            index = Integer.parseInt(map.get(KeyWord.toStrLower(KeyWord.INDEX)).toString()) - 1;
             isList = true;
         }
 
-        if (map.containsKey("desc")) {
-            String desc = map.get("desc").toString().trim();
+        if (map.containsKey(KeyWord.toStrLower(KeyWord.DESC))) {
+            String desc = map.get(KeyWord.toStrLower(KeyWord.DESC)).toString().trim();
             elementDesc = desc.length() == 0 ? "" : desc;
 
 //            if (elementDesc.length() == 0) {
@@ -169,8 +182,8 @@ public class Page1 {
         String type = null, value = null;
 
         Map map = YamlParser.getLocatorMap(this.locatorMap, key);
-        type = map.get("type").toString();
-        value = map.get("value").toString();
+        type = map.get(KeyWord.toStrLower(KeyWord.TYPE)).toString();
+        value = map.get(KeyWord.toStrLower(KeyWord.VALUE)).toString();
 
         return waitForLocators(this.getBy(type, value), wait);
     }
@@ -184,13 +197,13 @@ public class Page1 {
     private synchronized static By getBy(String type, String value) {
         By by = null;
 
-        if (type.equalsIgnoreCase("id")) {
+        if (type.equalsIgnoreCase(KeyWord.toStr(KeyWord.ID))) {
             by = By.id(value);
         }
-        if (type.equalsIgnoreCase("name")) {
+        if (type.equalsIgnoreCase(KeyWord.toStr(KeyWord.NAME))) {
             by = By.name(value);
         }
-        if (type.equalsIgnoreCase("xpath")) {
+        if (type.equalsIgnoreCase(KeyWord.toStr(KeyWord.XPATH))) {
             by = By.xpath(value);
         }
         if (type.equalsIgnoreCase("className")) {
@@ -213,6 +226,8 @@ public class Page1 {
             by = MobileBy.IosUIAutomation(value);
         }
 
+
+
         return by;
     }
 
@@ -230,13 +245,31 @@ public class Page1 {
         if (wait) {
             try {
                 // For Web, selenium
-                if (Variables.TEST_TYPE.equalsIgnoreCase("WEB"))
-                    element = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS/1000)
+                if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
+                    element = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
                             .until(new ExpectedCondition<WebElement>() {
                                 public WebElement apply(WebDriver webDriver) {
                                     return WebDriverManager.getInstance().findElement(by);
                                 }
                             });
+                }
+
+                // For iOS
+                if (Variables.TEST_TYPE.equalsIgnoreCase(IOSTESTTYPE)) {
+                    /**
+                     * TODO add iOS handle code here
+                     */
+                }
+
+                // For Android
+                if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
+                    element = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                            .until(new ExpectedConditionForAndroid<WebElement>() {
+                                public WebElement apply(AndroidDriver androidDriver) {
+                                    return AndroidDriverManager.getInstance().findElement(by);
+                                }
+                            });
+                }
             } catch (Exception e) {
                 String emsg = "Locator ["
                         + by.toString()
@@ -261,8 +294,18 @@ public class Page1 {
      */
     private synchronized WebElement getLocatorNoWait(By by) {
         WebElement el = null;
-        if (Variables.TEST_TYPE.equalsIgnoreCase("WEB")) {
+        if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
             el = WebDriverManager.getInstance().findElement(by);
+        }
+
+        if (Variables.TEST_TYPE.contentEquals(IOSTESTTYPE)) {
+            /**
+             * TODO: Add iOS handle code here
+             */
+        }
+
+        if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
+            el = AndroidDriverManager.getInstance().findElement(by);
         }
 
         return el;
@@ -281,7 +324,7 @@ public class Page1 {
         if (wait) {
             try {
                 // For Web, selenium
-                if (Variables.TEST_TYPE.equalsIgnoreCase("WEB"))
+                if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
                     elements = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
                             .until(new ExpectedCondition<List<WebElement>>() {
                                 public List<WebElement> apply(WebDriver driver) {
@@ -289,6 +332,25 @@ public class Page1 {
                                     return els.size() > 0 ? els : null;
                                 }
                             });
+                }
+
+                // For iOS
+                if (Variables.TEST_TYPE.equalsIgnoreCase(IOSTESTTYPE)) {
+                    /**
+                     * TODO: Add iOS handle code here
+                     */
+                }
+
+                // For Android
+                if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
+                    elements = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                            .until(new ExpectedConditionForAndroid<List<WebElement>>() {
+                                public List<WebElement> apply(AndroidDriver androidDriver) {
+                                    List<WebElement> els = AndroidDriverManager.getInstance().findElements(by);
+                                    return  els.size() > 0 ? els : null;
+                                }
+                            });
+                }
             } catch (Exception e) {
                 String emsg = "Locator list ["
                         + by.toString()
@@ -314,8 +376,21 @@ public class Page1 {
     private synchronized List<WebElement> getLocatorsNoWait(final By by) {
         List<WebElement> elements = null;
 
-        if (Variables.TEST_TYPE.equalsIgnoreCase("WEB")) {
+        // For Selenium, Web
+        if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
             elements = WebDriverManager.getInstance().findElements(by);
+        }
+
+        // For iOS
+        if (Variables.TEST_TYPE.equalsIgnoreCase(IOSTESTTYPE)) {
+            /**
+             * TODO: Add iOS handle code here
+             */
+        }
+
+        // For Android
+        if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
+            elements = AndroidDriverManager.getInstance().findElements(by);
         }
 
         return elements;
@@ -333,13 +408,32 @@ public class Page1 {
         }
 
         try {
-            if (Variables.TEST_TYPE.equalsIgnoreCase("WEB"))
-                wait = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS/1000)
+            // For Selenium, Web
+            if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
+                wait = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
                         .until(new ExpectedCondition<Boolean>() {
                             public Boolean apply(WebDriver webDriver) {
                                 return element.isDisplayed();
                             }
                         });
+            }
+
+            // For iOS
+            if (Variables.TEST_TYPE.equalsIgnoreCase(IOSTESTTYPE)) {
+                /**
+                 * TODO: Add iOS handle code here
+                 */
+            }
+
+            // For Android
+            if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
+                wait = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                        .until(new ExpectedConditionForAndroid<Boolean>() {
+                            public Boolean apply(AndroidDriver androidDriver) {
+                                return element.isDisplayed();
+                            }
+                        });
+            }
         } catch (Exception e) {
             String emsg = "Locator ["
                     + element.toString()
@@ -367,13 +461,31 @@ public class Page1 {
         }
 
         try {
-            if (Variables.TEST_TYPE.equalsIgnoreCase("WEB"))
-                wait = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS/1000)
+            // For Selenium, Web
+            if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
+                wait = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
                         .until(new ExpectedCondition<Boolean>() {
                             public Boolean apply(WebDriver webDriver) {
                                 return !element.isDisplayed();
                             }
                         });
+            }
+
+            // For iOS
+            /**
+             * TODO: Add iOS handle code here
+             */
+
+            // For Android
+            if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
+                wait = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                        .until(new ExpectedConditionForAndroid<Boolean>() {
+                            public Boolean apply(AndroidDriver androidDriver) {
+                                return !element.isDisplayed();
+                            }
+                        });
+            }
+
         } catch (Exception e) {
             String emsg =
                     "Locator [" +
@@ -411,11 +523,21 @@ public class Page1 {
         boolean isExist = true;
         List<WebElement> eList = null;
 
-        if (Variables.TEST_TYPE.equalsIgnoreCase("WEB")) {
+        // For Selenium, Web
+        if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
             eList = WebDriverManager.getInstance().findElements(by);
         }
 
-        return !eList.isEmpty()?true:false;
+        // For iOS
+        /**
+         * TODO: Add iOS handle code here
+         */
+
+        if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
+            eList = AndroidDriverManager.getInstance().findElements(by);
+        }
+
+        return !eList.isEmpty() ? true : false;
 
     }
 

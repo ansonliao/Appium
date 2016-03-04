@@ -2,7 +2,8 @@
 <suite name="Sample for IOS test in Appium" parallel="false">
     <test name="Sample for IOS test in Appium">
         <classes>
-            <class name="ANDROID.maaiiTest" />
+            <!--<class name="ANDROID.maaiiTest" />-->
+            <class name="ANDROID.maaii" />
         </classes>
     </test>
     <listeners>

@@ -47,8 +47,8 @@ public class WebDriverManager {
     public static WebDriver getInstance() {
         Long threadID = Thread.currentThread().getId();
 
-        WebDriver driver = null;
         if (!webDriverMap.containsKey(threadID)) {
+            WebDriver driver = null;
             if (browser.toLowerCase().trim().equals(BROWSER1)) {
                 driver = new FirefoxDriver();
                 driver.manage().window().maximize();

@@ -1,14 +1,20 @@
 package com.maaii.automation.testcase;
 
+import com.maaii.automation.android.AndroidDriverManager;
+import com.maaii.automation.commons.ExtentTestResult;
+import com.maaii.automation.commons.Variables;
 import com.maaii.automation.extentreport.Factory.ExtentManager;
 import com.maaii.automation.extentreport.Factory.ExtentTestManager;
 import com.maaii.automation.page.Page;
 import com.maaii.automation.page.Page1;
+import com.maaii.automation.selenium.ExtendWebElement;
 import com.maaii.automation.selenium.WebDriverManager;
+import com.maaii.automation.utils.ConfigReader;
 import com.maaii.automation.utils.extentreport.ExtentTestUtil;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -24,13 +30,10 @@ import java.util.*;
  * Created by ansonliao on 3/3/2016.
  */
 public class AndroidBaseTest {
-    public static ExtentReports extent;
-    public ExtentTest test;
-    public WebDriver driver;
-    public Page1 page;
-    private static final int PASS = 1;
-    private static final int FAIL = 2;
-    private static final int SKIP = 3;
+    protected static ExtentReports extent;
+    protected ExtentTest test;
+    protected AndroidDriver driver;
+    protected Page1 page;
 
     @BeforeSuite
     public void extentSetup(ITestContext context) {
@@ -40,8 +43,9 @@ public class AndroidBaseTest {
 
     @BeforeClass
     public void beforeClass() throws IOException {
-        driver = WebDriverManager.getInstance();
-        page = new Page1("src/test/Resources/config/Google.yaml");
+        driver = AndroidDriverManager.getInstance();
+        page = new Page1("src/test/Resources/config/maaii.yaml");
+        Variables.TEST_TYPE = "ANDROID";
     }
 
     @BeforeMethod
@@ -63,7 +67,7 @@ public class AndroidBaseTest {
 
     @AfterMethod
     public void afterEachTestMethod(ITestResult iTestResult) {
-        WebDriverManager.closeDriver();
+        AndroidDriverManager.quitDriver();
 
         String className = iTestResult.getTestClass().getRealClass().toString().trim();
 
@@ -71,15 +75,15 @@ public class AndroidBaseTest {
         ExtentTestManager.getTest().getTest().setEndedTime(getTime(iTestResult.getEndMillis()));
 
         switch (iTestResult.getStatus()) {
-            case PASS:
+            case ExtentTestResult.PASS:
                 ExtentTestManager.getTest().log(LogStatus.PASS, "Test Passed");
                 ExtentTestUtil.LogPass("TEST END with PASS: " + iTestResult.getMethod().getMethodName() + " [method].");
                 break;
-            case FAIL:
+            case ExtentTestResult.FAIL:
                 ExtentTestManager.getTest().log(LogStatus.FAIL, getStackTrace(iTestResult.getThrowable()));
                 ExtentTestUtil.LogFail("TEST END with FAIL: " + iTestResult.getMethod().getMethodName() + " [method].");
                 break;
-            case SKIP:
+            case ExtentTestResult.SKIP:
                 ExtentTestManager.getTest().log(LogStatus.SKIP, "Test Skipped");
                 ExtentTestUtil.LogSkip("TEST END with SKIP: " + iTestResult.getMethod().getMethodName() + " [method].");
                 break;
@@ -93,7 +97,7 @@ public class AndroidBaseTest {
 
     @AfterClass
     public void afterClass() {
-        WebDriverManager.quitDriver();
+        AndroidDriverManager.quitDriver();
     }
 
     /**

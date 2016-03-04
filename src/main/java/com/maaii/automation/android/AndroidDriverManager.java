@@ -21,7 +21,6 @@ import java.util.Map;
  * Created by ansonliao on 3/3/2016.
  */
 public class AndroidDriverManager {
-//    private static AndroidDriver driver;
     private static Map<Long, AndroidDriver> androidDriverMap = new HashMap<Long, AndroidDriver>();
     private static Map<Long, Map<String, String>> configMap = new HashMap<Long, Map<String, String>>();
     private static Map<Long, String> appMap = new HashMap<Long, String>();
@@ -33,7 +32,6 @@ public class AndroidDriverManager {
 
     static {
         ConfigReader config = ConfigReader.getInstance();
-//        testType = config.getTestType();
         appDir = new File(config.getAppDir());
         app = new File(appDir, config.getApp());
         deviceName = config.getDeviceName();
@@ -45,7 +43,7 @@ public class AndroidDriverManager {
     public static synchronized AndroidDriver getInstance() {
         Long threadID = Utils.getThreadID();
 
-        if (androidDriverMap.containsKey(threadID)) {
+        if (!androidDriverMap.containsKey(threadID)) {
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);

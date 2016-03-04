@@ -1,0 +1,3 @@
+termsBtn:
+  type: "id"
+  value: "com.maaii.test:id/btn_terms"

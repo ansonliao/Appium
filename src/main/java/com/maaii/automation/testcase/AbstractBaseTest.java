@@ -1,5 +1,6 @@
 package com.maaii.automation.testcase;
 
+import com.maaii.automation.commons.ExtentTestResult;
 import com.maaii.automation.extentreport.Factory.*;
 import com.maaii.automation.page.Page;
 import com.maaii.automation.page.Page1;
@@ -27,11 +28,6 @@ public class AbstractBaseTest {
     public ExtentTest test;
     public WebDriver driver;
     public Page1 page;
-    private static final int PASS = 1;
-    private static final int FAIL = 2;
-    private static final int SKIP = 3;
-
-
 
     @BeforeSuite
     public void extentSetup(ITestContext context) {
@@ -72,15 +68,15 @@ public class AbstractBaseTest {
         ExtentTestManager.getTest().getTest().setEndedTime(getTime(iTestResult.getEndMillis()));
 
         switch (iTestResult.getStatus()) {
-            case PASS:
+            case ExtentTestResult.PASS:
                 ExtentTestManager.getTest().log(LogStatus.PASS, "Test Passed");
                 ExtentTestUtil.LogPass("TEST END with PASS: " + iTestResult.getMethod().getMethodName() + " [method].");
                 break;
-            case FAIL:
+            case ExtentTestResult.FAIL:
                 ExtentTestManager.getTest().log(LogStatus.FAIL, getStackTrace(iTestResult.getThrowable()));
                 ExtentTestUtil.LogFail("TEST END with FAIL: " + iTestResult.getMethod().getMethodName() + " [method].");
                 break;
-            case SKIP:
+            case ExtentTestResult.SKIP:
                 ExtentTestManager.getTest().log(LogStatus.SKIP, "Test Skipped");
                 ExtentTestUtil.LogSkip("TEST END with SKIP: " + iTestResult.getMethod().getMethodName() + " [method].");
                 break;

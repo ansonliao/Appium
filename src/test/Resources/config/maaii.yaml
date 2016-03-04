@@ -1,0 +1,5 @@
+testType: "ANDROID"
+deviceName: "emulator-5554"
+app: "Maaii.apk"
+appDir: "app"
+locatorYaml: "src/test/Resources/locator/maaii.yaml"

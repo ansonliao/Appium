@@ -18,6 +18,7 @@ public class AppiumServer {
 
         if (!appiumDriverLocalServiceMap.containsKey(threadID)) {
             AppiumDriverLocalService service = AppiumDriverLocalService.buildDefaultService();
+            service.start();
             appiumDriverLocalServiceMap.put(threadID, service);
         }
 
