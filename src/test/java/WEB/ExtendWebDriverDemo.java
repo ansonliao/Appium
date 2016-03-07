@@ -17,7 +17,7 @@ public class ExtendWebDriverDemo extends AbstractBaseTest {
     @Test(description = "Demo in Web of selenium in Pass", groups = {"Pass"})
     public void f1() throws IllegalLocatorIndexException, NoSuchLocatorExistException, LocatorDisplayException, NoSuchLocatorException, InterruptedException {
         driver.get("http://www.google.com");
-        Action.type(page.getElement("kwInputField"), "appium");
-        Action.click(page.getElement("searchBtn"));
+        Action.type(page.getExtElement("kwInputField"), "appium");
+        Action.click(page.getExtElement("searchBtn"));
     }
 }

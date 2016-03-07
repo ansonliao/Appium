@@ -20,13 +20,15 @@ public class Action {
 
     public synchronized static void type(ExtendWebElement extendWebElement, String text) {
         extendWebElement.getElement().sendKeys(text);
-        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Type [" + text + "].");
+//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Type [" + text + "].");
+        ExtentTestUtil.LogInfo("Type Action: [" + text + "]; Locator: " + extendWebElement.getDesc());
     }
 
     public synchronized static void clearAndType(ExtendWebElement extendWebElement, String text) {
         extendWebElement.getElement().clear();
         extendWebElement.getElement().sendKeys(text);
-        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": ClearAndType [" + text + "].");
+//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": ClearAndType [" + text + "].");
+        ExtentTestUtil.LogInfo("ClearAndType Action: [" + text + "]; Locator: " + extendWebElement.getDesc());
     }
 
     public static synchronized void typeByAppend(ExtendWebElement extendWebElement, String text) {
@@ -34,23 +36,33 @@ public class Action {
         String newValueString = oldValueString + text;
         extendWebElement.getElement().sendKeys(newValueString);
 
-        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": TypeByAppend, after typed, the text field is [" + newValueString + "].");
+//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": TypeByAppend, after typed, the text field is [" + newValueString + "].");
+        ExtentTestUtil.LogInfo("TypeByAppend: [" + text + "]; Locator: " + extendWebElement.getDesc());
     }
 
     public static synchronized void click(ExtendWebElement extendWebElement) {
         extendWebElement.getElement().click();
-        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Click action.");
+//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Click action.");
+        ExtentTestUtil.LogInfo("Click Action: " + extendWebElement.getDesc());
     }
 
+    /**
+     *
+     * @param extendWebElement
+     * @param sleepTime in ms
+     * @throws InterruptedException
+     */
     public static synchronized void clickAndWait(ExtendWebElement extendWebElement, int sleepTime) throws InterruptedException {
         extendWebElement.getElement().click();
-        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": ClickAndWait [wait " + sleepTime + " ms]." );
+//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": ClickAndWait [wait " + sleepTime + " ms]." );
+        ExtentTestUtil.LogInfo("ClickAndWait: " + extendWebElement + "; Wait: " + sleepTime + "ms");
         Thread.sleep(sleepTime);
     }
 
     public static synchronized void clear(ExtendWebElement extendWebElement) {
         extendWebElement.getElement().clear();
-        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Clear text field.");
+//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Clear text field.");
+        ExtentTestUtil.LogInfo("Clear text field Action: " + extendWebElement.getDesc());
     }
 
     public static synchronized void swipeDirection(SWIPEDIRECTION direction) throws InterruptedException {
@@ -59,14 +71,6 @@ public class Action {
         String logMsg = null;
 
         AppiumDriver driver = null;
-
-//        if (Variables.TEST_TYPE.equalsIgnoreCase(TestPlatform.ANDROID.toString())) {
-//            driver = (AndroidDriver) AndroidDriverManager.getInstance();
-//        }
-//
-//        if (Variables.TEST_TYPE.equalsIgnoreCase(TestPlatform.IOS.toString())) {
-//            driver =(IOSDriver) IOSDriverManager.getInstance();
-//        }
 
         switch (Variables.TEST_TYPE) {
             case WEB:

@@ -27,7 +27,7 @@ public class AbstractBaseTest {
     public static ExtentReports extent;
     public ExtentTest test;
     public WebDriver driver;
-    public Page1 page;
+    public Page page;
 
     @BeforeSuite
     public void extentSetup(ITestContext context) {
@@ -38,7 +38,7 @@ public class AbstractBaseTest {
     @BeforeClass
     public void beforeClass() throws IOException {
         driver = WebDriverManager.getInstance();
-        page = new Page1("src/test/Resources/config/Google.yaml");
+        page = new Page("src/test/Resources/config/Google.yaml");
     }
 
     @BeforeMethod

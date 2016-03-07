@@ -42,6 +42,8 @@ public class maaii extends AndroidBaseTest {
         Assert.assertTrue(page.getElement("userName2").getText().contains("testing"), "Register user name incorrected. [User Name Field 2.]");
         System.out.println(page.getElement("userPhone").getText().replaceAll(" ", "").trim());
         Assert.assertTrue(Utils.removeAllSpace(page.getElement("userPhone").getText()).contains("+852"), "Register region incorrect, expect: [Hong Kong] with [+852].");
-        Assert.assertTrue(Utils.removeAllSpace(page.getElement("userPhone").getText()).contains("68795634"), "Register user phone incorrect.");
+
+        // fail case
+        Assert.assertTrue(Utils.removeAllSpace(page.getElement("userPhone").getText()).contains("68795635"), "Register user phone incorrect.");
     }
 }

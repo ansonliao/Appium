@@ -52,7 +52,7 @@ public class ConfigReader {
     private static final String PLATFORMVERSION = "platformversion";
 
 
-    private ConfigReader() {
+    ConfigReader() {
         readConfig(CONFIGFILE);
     }
 
