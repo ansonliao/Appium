@@ -1,15 +1,15 @@
 package ANDROID;
 
+import com.maaii.automation.commons.SWIPEDIRECTION;
 import com.maaii.automation.exception.IllegalLocatorIndexException;
 import com.maaii.automation.exception.LocatorDisplayException;
 import com.maaii.automation.exception.NoSuchLocatorException;
 import com.maaii.automation.exception.NoSuchLocatorExistException;
 import com.maaii.automation.page.Action;
 import com.maaii.automation.testcase.AndroidBaseTest;
+import com.maaii.automation.utils.Utils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.util.Set;
 
 /**
  * Created by ansonliao on 4/3/2016.
@@ -18,26 +18,30 @@ public class maaii extends AndroidBaseTest {
 
     @Test
     public void f1() throws IllegalLocatorIndexException, NoSuchLocatorExistException, LocatorDisplayException, NoSuchLocatorException, InterruptedException {
-        Action.click(page.getElement("termsBtn"));
-        Assert.assertEquals("Terms of Service", page.getElement("termsTitle").getElement().getText(), "Terms page's title incorrect.");
-//        System.out.println(page.getElementNoWait("termsTitle").getElement().getText());
+        Action.click(page.getExtElement("continueBtn"));
+        Action.click(page.getExtElement("phoneCallAllowBtn"));
+        Action.click(page.getExtElement("contactAllowBtn"));
+        Action.click(page.getExtElement("countryCodeSelector"));
 
-//        Set<String> contextNames = driver.getContextHandles();
-//        for (String contextName : contextNames) {
-//            System.out.println("ContextName: " + contextName);
-//            if (contextName.contains("WEBVIEW")) {
-//                driver.context(contextName);
-//            }
-//        }
-//
-//        System.out.println("Terms content title: " + driver.findElementById("maaii-terms-of-service").getText());
-        Thread.sleep(10000);
-        System.out.println("Start scroll...");
-        int width = driver.manage().window().getSize().width;
-        int heigh = driver.manage().window().getSize().height;
+        Action.click(page.getExtElement("countrySearch"));
+        Action.type(page.getExtElement("countryInput"), "hong kong");
+        Action.click(page.getExtElement("hkRegion"));
 
-        driver.swipe(width/2, heigh/10*8, width/2, heigh/10*2, 1000);
+        Action.type(page.getExtElement("phoneNoInput"), "68795634");
+        Action.type(page.getExtElement("userNameInput"), "testing");
+        Action.click(page.getExtElement("continueBtn2"));
+        Action.click(page.getExtElement("registerConfirm"));
+        Action.click(page.getExtElement("connect2FBSkip"));
+        Action.swipeDirection(SWIPEDIRECTION.RIGHT);
+        Action.swipeDirection(SWIPEDIRECTION.RIGHT);
+        Action.swipeDirection(SWIPEDIRECTION.RIGHT);
+        Action.swipeDirection(SWIPEDIRECTION.RIGHT);
 
-        Thread.sleep(5000);
+        Action.click(page.getExtElement("tutorialCompleteBtn"));
+        Assert.assertTrue(page.getElement("userName").getText().contains("testing"), "Register user name incorrected.");
+        Assert.assertTrue(page.getElement("userName2").getText().contains("testing"), "Register user name incorrected. [User Name Field 2.]");
+        System.out.println(page.getElement("userPhone").getText().replaceAll(" ", "").trim());
+        Assert.assertTrue(Utils.removeAllSpace(page.getElement("userPhone").getText()).contains("+852"), "Register region incorrect, expect: [Hong Kong] with [+852].");
+        Assert.assertTrue(Utils.removeAllSpace(page.getElement("userPhone").getText()).contains("68795634"), "Register user phone incorrect.");
     }
 }

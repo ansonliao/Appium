@@ -2,6 +2,71 @@ termsBtn:
   type: "id"
   value: "com.maaii.test:id/btn_terms"
 
-termsTitle:
+continueBtn:
+  type: "id"
+  value: "com.maaii.test:id/btn_register"
+
+phoneCallAllowBtn:
+  type: "id"
+  value: "com.android.packageinstaller:id/permission_allow_button"
+
+contactAllowBtn:
+  type: "id"
+  value: "com.android.packageinstaller:id/permission_allow_button"
+
+countryCodeSelector:
+  type: "id"
+  value: "com.maaii.test:id/country_code_field"
+
+countrySearch:
   type: "xpath"
-  value: "//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.TextView[1]"
+  value: "//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.support.v7.widget.LinearLayoutCompat[1]/android.widget.TextView[1]"
+
+countryInput:
+  type: "id"
+  value: "android:id/search_src_text"
+
+hkRegion:
+  type: "id"
+  value: "com.maaii.test:id/country_name"
+  index: 1
+
+phoneNoInput:
+  type: "id"
+  value: "com.maaii.test:id/phone_number_editText"
+
+userNameInput:
+  type: "id"
+  value: "com.maaii.test:id/username_editText"
+
+continueBtn2:
+  type: "id"
+  value: "com.maaii.test:id/continue_button"
+
+registerConfirm:
+  type: "id"
+  value: "android:id/button1"
+
+connect2FBSkip:
+  type: "id"
+  value: "com.maaii.test:id/maaii_setup_complete_facebook_skip"
+
+connect2FBConnect:
+  type: "id"
+  value: "com.maaii.test:id/maaii_setup_complete_facebook_connect"
+
+tutorialCompleteBtn:
+  type: "id"
+  value: "com.maaii.test:id/btn_skip"
+
+userName:
+  type: "id"
+  value: "com.maaii.test:id/userName"
+
+userName2:
+  type: "id"
+  value: "com.maaii.test:id/userName2"
+
+userPhone:
+  type: "id"
+  value: "com.maaii.test:id/tv_myNumber"

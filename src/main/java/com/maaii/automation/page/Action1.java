@@ -1,8 +1,11 @@
 package com.maaii.automation.page;
 
+import com.maaii.automation.commons.SWIPEDIRECTION;
 import com.maaii.automation.selenium.ExtendWebElement;
 import com.maaii.automation.utils.extentreport.ExtentTestUtil;
-import org.openqa.selenium.WebElement;
+import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebDriver;
 
 /**
  * Created by ansonliao on 19/12/2015.
@@ -42,4 +45,6 @@ public class Action1 {
         extendWebElement.getElement().clear();
         ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Clear text field.");
     }
+
+
 }

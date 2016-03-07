@@ -1,5 +1,6 @@
 package IOS;
 
+import com.maaii.automation.commons.TestPlatform;
 import com.maaii.automation.commons.Variables;
 import com.maaii.automation.exception.*;
 import com.maaii.automation.ios.IOSDriverManager;
@@ -41,7 +42,8 @@ public class IOSTestSample {
     }
     @BeforeMethod
     public void beforeMethod() throws IOException, ConfigurationException {
-        Variables.TEST_TYPE = System.getProperty("testType");
+//        Variables.TEST_TYPE = System.getProperty("testType");
+        Variables.TEST_TYPE = TestPlatform.IOS;
         IOSDriverManager.setup(confYamlFile);
         driver = IOSDriverManager.getInstance();
         page = new Page(confYamlFile);

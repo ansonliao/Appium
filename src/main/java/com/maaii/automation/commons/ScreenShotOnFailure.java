@@ -40,23 +40,38 @@ public class ScreenShotOnFailure extends TestListenerAdapter {
 
 //        String testType = System.getProperty("testType");
 
-        if (!(new File(destDir).isDirectory())){
-            new File(destDir).mkdirs();
-        }
+//        if (!(new File(destDir).isDirectory())){
+//            new File(destDir).mkdirs();
+//        }
+//
+//        if (Variables.TEST_TYPE.equalsIgnoreCase("ios")) {
+//            idr = IOSDriverManager.getInstance();
+//            scrFile = ((TakesScreenshot) idr).getScreenshotAs(OutputType.FILE);
+//        }
+//
+//        if (Variables.TEST_TYPE.equalsIgnoreCase("android")) {
+//            adr = AndroidDriverManager.getInstance();
+//            scrFile = ((TakesScreenshot) adr).getScreenshotAs(OutputType.FILE);
+//        }
+//
+//        if (Variables.TEST_TYPE.equalsIgnoreCase("web")) {
+//            driver = WebDriverManager.getInstance();
+//            scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//        }
 
-        if (Variables.TEST_TYPE.equalsIgnoreCase("ios")) {
-            idr = IOSDriverManager.getInstance();
-            scrFile = ((TakesScreenshot) idr).getScreenshotAs(OutputType.FILE);
-        }
-
-        if (Variables.TEST_TYPE.equalsIgnoreCase("android")) {
-            adr = AndroidDriverManager.getInstance();
-            scrFile = ((TakesScreenshot) adr).getScreenshotAs(OutputType.FILE);
-        }
-
-        if (Variables.TEST_TYPE.equalsIgnoreCase("web")) {
-            driver = WebDriverManager.getInstance();
-            scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        switch (Variables.TEST_TYPE) {
+            case WEB:
+                driver = WebDriverManager.getInstance();
+                scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+                break;
+            case IOS:
+                idr = IOSDriverManager.getInstance();
+                scrFile = ((TakesScreenshot) idr).getScreenshotAs(OutputType.FILE);
+                break;
+            default:
+                adr = AndroidDriverManager.getInstance();
+                scrFile = ((TakesScreenshot) adr).getScreenshotAs(OutputType.FILE);
+                break;
         }
 
 

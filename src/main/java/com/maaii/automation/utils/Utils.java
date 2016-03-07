@@ -23,4 +23,8 @@ public class Utils {
     public static synchronized Long getThreadID() {
         return Thread.currentThread().getId();
     }
+
+    public static synchronized String removeAllSpace(String str) {
+        return str.isEmpty() ? null : str.replaceAll(" ", "");
+    }
 }

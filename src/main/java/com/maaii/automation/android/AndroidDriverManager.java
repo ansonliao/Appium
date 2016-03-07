@@ -48,6 +48,7 @@ public class AndroidDriverManager {
             capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");
             capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, deviceName);
             capabilities.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+//            capabilities.setCapability(MobileCapabilityType);
             AndroidDriver driver = new AndroidDriver<WebElement>(AppiumServer.gerService().getUrl(), capabilities);
 
             androidDriverMap.put(threadID, driver);
@@ -62,6 +63,7 @@ public class AndroidDriverManager {
 
     public static synchronized void quitDriver() {
         androidDriverMap.get(Utils.getThreadID()).quit();
+        AppiumServer.gerService().stop();
     }
 
 }

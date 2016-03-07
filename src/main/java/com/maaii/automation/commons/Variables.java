@@ -12,6 +12,6 @@ public class Variables {
     /**
      *
      */
-    public static String  TEST_TYPE = null;
+    public static TestPlatform TEST_TYPE = null;
 
 }

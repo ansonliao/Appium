@@ -1,5 +1,6 @@
 package ANDROID;
 
+import com.maaii.automation.commons.TestPlatform;
 import com.maaii.automation.commons.Variables;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
@@ -32,7 +33,7 @@ public class maaiiTest {
             throw new RuntimeException("An appium server node is not started.");
         }
 
-        Variables.TEST_TYPE = System.getProperty("testType");
+        Variables.TEST_TYPE = TestPlatform.ANDROID;
         File appFile = new File("/Users/ansonliao/Desktop/Maaii.apk");
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "");

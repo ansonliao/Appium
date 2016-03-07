@@ -28,19 +28,19 @@ import java.util.Map;
  * Created by ansonliao on 30/8/15.
  */
 public class Page1 {
-    private WebDriver webDriver;
+//    private WebDriver webDriver;
     private static String confYamlFile = null;
     private static String locatorYamlFile = null;
     private Map locatorMap = null;
 
-    private static final String WEBTESTTYPE = "WEB";
-    private static final String IOSTESTTYPE = "IOS";
-    private static final String ANDROIDTESTTYPE = "ANDROID";
-
-    private static final String LOCATORTYPE = "type";
-    private static final String LOCATORVALUE = "value";
-    private static final String LOCATORINDEX = "index";
-    private static final String LOCATORDESC = "desc";
+//    private static final String WEBTESTTYPE = "WEB";
+//    private static final String IOSTESTTYPE = "IOS";
+//    private static final String ANDROIDTESTTYPE = "ANDROID";
+//
+//    private static final String LOCATORTYPE = "type";
+//    private static final String LOCATORVALUE = "value";
+//    private static final String LOCATORINDEX = "index";
+//    private static final String LOCATORDESC = "desc";
 
     public Page1(String file) throws IOException {
         this.confYamlFile = file;
@@ -244,31 +244,28 @@ public class Page1 {
 
         if (wait) {
             try {
-                // For Web, selenium
-                if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
-                    element = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
-                            .until(new ExpectedCondition<WebElement>() {
-                                public WebElement apply(WebDriver webDriver) {
-                                    return WebDriverManager.getInstance().findElement(by);
-                                }
-                            });
-                }
-
-                // For iOS
-                if (Variables.TEST_TYPE.equalsIgnoreCase(IOSTESTTYPE)) {
-                    /**
-                     * TODO add iOS handle code here
-                     */
-                }
-
-                // For Android
-                if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
-                    element = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
-                            .until(new ExpectedConditionForAndroid<WebElement>() {
-                                public WebElement apply(AndroidDriver androidDriver) {
-                                    return AndroidDriverManager.getInstance().findElement(by);
-                                }
-                            });
+                switch (Variables.TEST_TYPE) {
+                    case WEB:
+                        element = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                                .until(new ExpectedCondition<WebElement>() {
+                                    public WebElement apply(WebDriver webDriver) {
+                                        return WebDriverManager.getInstance().findElement(by);
+                                    }
+                                });
+                        break;
+                    case IOS:
+                        /**
+                         * TODO add iOS handle code here
+                         */
+                        break;
+                    default:
+                        element = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                                .until(new ExpectedConditionForAndroid<WebElement>() {
+                                    public WebElement apply(AndroidDriver androidDriver) {
+                                        return AndroidDriverManager.getInstance().findElement(by);
+                                    }
+                                });
+                        break;
                 }
             } catch (Exception e) {
                 String emsg = "Locator ["
@@ -294,18 +291,19 @@ public class Page1 {
      */
     private synchronized WebElement getLocatorNoWait(By by) {
         WebElement el = null;
-        if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
-            el = WebDriverManager.getInstance().findElement(by);
-        }
 
-        if (Variables.TEST_TYPE.contentEquals(IOSTESTTYPE)) {
-            /**
-             * TODO: Add iOS handle code here
-             */
-        }
-
-        if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
-            el = AndroidDriverManager.getInstance().findElement(by);
+        switch (Variables.TEST_TYPE) {
+            case WEB:
+                el = WebDriverManager.getInstance().findElement(by);
+                break;
+            case IOS:
+                /**
+                 * TODO: Add iOS handle code here
+                 */
+                break;
+            default:
+                el = AndroidDriverManager.getInstance().findElement(by);
+                break;
         }
 
         return el;
@@ -323,33 +321,30 @@ public class Page1 {
 
         if (wait) {
             try {
-                // For Web, selenium
-                if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
-                    elements = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
-                            .until(new ExpectedCondition<List<WebElement>>() {
-                                public List<WebElement> apply(WebDriver driver) {
-                                    List<WebElement> els = WebDriverManager.getInstance().findElements(by);
-                                    return els.size() > 0 ? els : null;
-                                }
-                            });
-                }
-
-                // For iOS
-                if (Variables.TEST_TYPE.equalsIgnoreCase(IOSTESTTYPE)) {
-                    /**
-                     * TODO: Add iOS handle code here
-                     */
-                }
-
-                // For Android
-                if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
-                    elements = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
-                            .until(new ExpectedConditionForAndroid<List<WebElement>>() {
-                                public List<WebElement> apply(AndroidDriver androidDriver) {
-                                    List<WebElement> els = AndroidDriverManager.getInstance().findElements(by);
-                                    return  els.size() > 0 ? els : null;
-                                }
-                            });
+                switch (Variables.TEST_TYPE) {
+                    case WEB:
+                        elements = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                                .until(new ExpectedCondition<List<WebElement>>() {
+                                    public List<WebElement> apply(WebDriver driver) {
+                                        List<WebElement> els = WebDriverManager.getInstance().findElements(by);
+                                        return els.size() > 0 ? els : null;
+                                    }
+                                });
+                        break;
+                    case IOS:
+                        /**
+                         * TODO: Add iOS handle code here
+                         */
+                        break;
+                    default:
+                        elements = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                                .until(new ExpectedConditionForAndroid<List<WebElement>>() {
+                                    public List<WebElement> apply(AndroidDriver androidDriver) {
+                                        List<WebElement> els = AndroidDriverManager.getInstance().findElements(by);
+                                        return  els.size() > 0 ? els : null;
+                                    }
+                                });
+                        break;
                 }
             } catch (Exception e) {
                 String emsg = "Locator list ["
@@ -376,21 +371,18 @@ public class Page1 {
     private synchronized List<WebElement> getLocatorsNoWait(final By by) {
         List<WebElement> elements = null;
 
-        // For Selenium, Web
-        if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
-            elements = WebDriverManager.getInstance().findElements(by);
-        }
-
-        // For iOS
-        if (Variables.TEST_TYPE.equalsIgnoreCase(IOSTESTTYPE)) {
-            /**
-             * TODO: Add iOS handle code here
-             */
-        }
-
-        // For Android
-        if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
-            elements = AndroidDriverManager.getInstance().findElements(by);
+        switch (Variables.TEST_TYPE) {
+            case WEB:
+                elements = WebDriverManager.getInstance().findElements(by);
+                break;
+            case IOS:
+                /**
+                 * TODO: Add iOS handle code here
+                 */
+                break;
+            default:
+                elements = AndroidDriverManager.getInstance().findElements(by);
+                break;
         }
 
         return elements;
@@ -408,31 +400,28 @@ public class Page1 {
         }
 
         try {
-            // For Selenium, Web
-            if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
-                wait = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
-                        .until(new ExpectedCondition<Boolean>() {
-                            public Boolean apply(WebDriver webDriver) {
-                                return element.isDisplayed();
-                            }
-                        });
-            }
-
-            // For iOS
-            if (Variables.TEST_TYPE.equalsIgnoreCase(IOSTESTTYPE)) {
-                /**
-                 * TODO: Add iOS handle code here
-                 */
-            }
-
-            // For Android
-            if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
-                wait = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
-                        .until(new ExpectedConditionForAndroid<Boolean>() {
-                            public Boolean apply(AndroidDriver androidDriver) {
-                                return element.isDisplayed();
-                            }
-                        });
+            switch (Variables.TEST_TYPE) {
+                case WEB:
+                    wait = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                            .until(new ExpectedCondition<Boolean>() {
+                                public Boolean apply(WebDriver webDriver) {
+                                    return element.isDisplayed();
+                                }
+                            });
+                    break;
+                case IOS:
+                    /**
+                     * TODO: Add iOS handle code here
+                     */
+                    break;
+                default:
+                    wait = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                            .until(new ExpectedConditionForAndroid<Boolean>() {
+                                public Boolean apply(AndroidDriver androidDriver) {
+                                    return element.isDisplayed();
+                                }
+                            });
+                    break;
             }
         } catch (Exception e) {
             String emsg = "Locator ["
@@ -461,29 +450,28 @@ public class Page1 {
         }
 
         try {
-            // For Selenium, Web
-            if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
-                wait = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
-                        .until(new ExpectedCondition<Boolean>() {
-                            public Boolean apply(WebDriver webDriver) {
-                                return !element.isDisplayed();
-                            }
-                        });
-            }
-
-            // For iOS
-            /**
-             * TODO: Add iOS handle code here
-             */
-
-            // For Android
-            if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
-                wait = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
-                        .until(new ExpectedConditionForAndroid<Boolean>() {
-                            public Boolean apply(AndroidDriver androidDriver) {
-                                return !element.isDisplayed();
-                            }
-                        });
+            switch (Variables.TEST_TYPE) {
+                case WEB:
+                    wait = new WebDriverWait(WebDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                            .until(new ExpectedCondition<Boolean>() {
+                                public Boolean apply(WebDriver webDriver) {
+                                    return !element.isDisplayed();
+                                }
+                            });
+                    break;
+                case IOS:
+                    /**
+                     * TODO: Add iOS handle code here
+                     */
+                    break;
+                default:
+                    wait = new AndroidDriverWait(AndroidDriverManager.getInstance(), Variables.DEFAULT_WAIT_TIME_IN_MILLIS / 1000)
+                            .until(new ExpectedConditionForAndroid<Boolean>() {
+                                public Boolean apply(AndroidDriver androidDriver) {
+                                    return !element.isDisplayed();
+                                }
+                            });
+                    break;
             }
 
         } catch (Exception e) {
@@ -523,18 +511,18 @@ public class Page1 {
         boolean isExist = true;
         List<WebElement> eList = null;
 
-        // For Selenium, Web
-        if (Variables.TEST_TYPE.equalsIgnoreCase(WEBTESTTYPE)) {
-            eList = WebDriverManager.getInstance().findElements(by);
-        }
-
-        // For iOS
-        /**
-         * TODO: Add iOS handle code here
-         */
-
-        if (Variables.TEST_TYPE.equalsIgnoreCase(ANDROIDTESTTYPE)) {
-            eList = AndroidDriverManager.getInstance().findElements(by);
+        switch (Variables.TEST_TYPE) {
+            case WEB:
+                eList = WebDriverManager.getInstance().findElements(by);
+                break;
+            case IOS:
+                /**
+                 * TODO: Add iOS handle code here
+                 */
+                break;
+            default:
+                eList = AndroidDriverManager.getInstance().findElements(by);
+                break;
         }
 
         return !eList.isEmpty() ? true : false;

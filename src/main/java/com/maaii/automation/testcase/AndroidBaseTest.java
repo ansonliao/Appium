@@ -2,6 +2,7 @@ package com.maaii.automation.testcase;
 
 import com.maaii.automation.android.AndroidDriverManager;
 import com.maaii.automation.commons.ExtentTestResult;
+import com.maaii.automation.commons.TestPlatform;
 import com.maaii.automation.commons.Variables;
 import com.maaii.automation.extentreport.Factory.ExtentManager;
 import com.maaii.automation.extentreport.Factory.ExtentTestManager;
@@ -33,7 +34,7 @@ public class AndroidBaseTest {
     protected static ExtentReports extent;
     protected ExtentTest test;
     protected AndroidDriver driver;
-    protected Page1 page;
+    protected Page page;
 
     @BeforeSuite
     public void extentSetup(ITestContext context) {
@@ -44,8 +45,9 @@ public class AndroidBaseTest {
     @BeforeClass
     public void beforeClass() throws IOException {
         driver = AndroidDriverManager.getInstance();
-        page = new Page1("src/test/Resources/config/maaii.yaml");
-        Variables.TEST_TYPE = "ANDROID";
+        page = new Page("src/test/Resources/config/maaii.yaml");
+//        Variables.TEST_TYPE = "ANDROID";
+        Variables.TEST_TYPE = TestPlatform.ANDROID;
     }
 
     @BeforeMethod

@@ -1,5 +1,6 @@
 package com.maaii.automation.selenium;
 
+import com.maaii.automation.commons.TestPlatform;
 import com.maaii.automation.commons.Variables;
 import com.maaii.automation.exception.ConfigurationException;
 import com.maaii.automation.file.YamlParser;
@@ -36,7 +37,7 @@ public class WebDriverManager {
     static {
         ConfigReader config = ConfigReader.getInstance();
         testType = config.getTestType();
-        Variables.TEST_TYPE = testType;
+        Variables.TEST_TYPE = TestPlatform.WEB;
         urlLink = config.getUrl();
         browser = config.getBrowser();
         mxRetryCount = config.getRetryCount();
