@@ -55,14 +55,13 @@ public class ExtentTestUtil {
 
     public static synchronized void setStartedTime(Date date) {
         ExtentTest test = ExtentTestManager.getTest();
-//        ExtentTestUtil.LogInfo("Set Test Started Time to: " + date);
-        ExtentTestUtil.LogInfo(Utils.toBold("Set Test Started Time: " )+ Utils.withPre(date.toString()));
+//        ExtentTestUtil.LogInfo(Utils.toBold("Set Test Started Time: " )+ Utils.withPre(date.toString()));
         test.setStartedTime(date);
     }
 
     public static synchronized void setEndedTime(Date date) {
         ExtentTest test =ExtentTestManager.getTest();
-        ExtentTestUtil.LogInfo(Utils.toBold("Set Test Ended Time: ") + Utils.withPre(date.toString()));
+//        ExtentTestUtil.LogInfo(Utils.toBold("Set Test Ended Time: ") + Utils.withPre(date.toString()));
         test.setEndedTime(date);
     }
 

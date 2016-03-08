@@ -48,4 +48,9 @@ public class maaii extends AndroidBaseTest {
         // fail case
         Assert.assertTrue(Utils.removeAllSpace(page.getElement("userPhone").getText()).contains("68795625"), "Register user phone incorrect.");
     }
+
+    @Test
+    public void TestFail() {
+        Assert.assertTrue(false, "Test Fail");
+    }
 }
