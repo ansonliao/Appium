@@ -1,8 +1,11 @@
 package com.maaii.automation.utils.extentreport;
 
 import com.maaii.automation.extentreport.Factory.ExtentTestManager;
+import com.maaii.automation.utils.Utils;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+
+import java.util.Date;
 
 /**
  * Created by ansonliao on 18/12/2015.
@@ -48,6 +51,19 @@ public class ExtentTestUtil {
         ExtentTest test = ExtentTestManager.getTest();
 
         test.log(LogStatus.WARNING, logInfo);
+    }
+
+    public static synchronized void setStartedTime(Date date) {
+        ExtentTest test = ExtentTestManager.getTest();
+//        ExtentTestUtil.LogInfo("Set Test Started Time to: " + date);
+        ExtentTestUtil.LogInfo(Utils.toBold("Set Test Started Time: " )+ Utils.withPre(date.toString()));
+        test.setStartedTime(date);
+    }
+
+    public static synchronized void setEndedTime(Date date) {
+        ExtentTest test =ExtentTestManager.getTest();
+        ExtentTestUtil.LogInfo(Utils.toBold("Set Test Ended Time: ") + Utils.withPre(date.toString()));
+        test.setEndedTime(date);
     }
 
     private static synchronized ExtentTest getExtentTest() {

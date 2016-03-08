@@ -1,5 +1,7 @@
 package com.maaii.automation.utils;
 
+import com.maaii.automation.commons.Variables;
+import com.maaii.automation.exception.IllegalArgumentException;
 import com.maaii.automation.utils.extentreport.ExtentTestUtil;
 import org.testng.log4testng.Logger;
 
@@ -16,7 +18,7 @@ public class GlobalConfigReader {
     private static Logger logger = Logger.getLogger(ConfigReader.class);
     private static int retryCount = 0;
 
-    private static final String RETRYCOUNT = "retryCount";
+    private static final String RETRYCOUNT = "retrycount";
     private static final String CONFIGFILE = "config/config.properties";
 
     private static int waitTime;
@@ -24,7 +26,7 @@ public class GlobalConfigReader {
     private static final String WAITTIME = "waitingtime";
     private static final String IMGSIMILAR = "imagesimilar";
 
-    public static void readConfig() throws Exception {
+    public static void readConfig() throws IllegalArgumentException {
         Properties properties = getConfig(CONFIGFILE);
         if (properties != null) {
             String sRetryCount = null;
@@ -71,9 +73,9 @@ public class GlobalConfigReader {
             }
 
             if (sImageSimilar != null) {
-                sWaitTime = sWaitTime.trim();
+                sImageSimilar = sImageSimilar.trim();
                 try {
-                    imageSimilar = Double.parseDouble(sWaitTime);
+                    imageSimilar = Double.parseDouble(sImageSimilar);
                 }
                 catch (final NumberFormatException e) {
                     String emsg =  "Parse " + IMGSIMILAR + " [" + sImageSimilar + "] from String to Int Exception.";
@@ -84,8 +86,12 @@ public class GlobalConfigReader {
 
             if (imageSimilar < 0 || imageSimilar > 1) {
                 String emsg = "IMAGE SIMILAR value should be in range [0, 1]";
-                throw new Exception(emsg);
+                throw new IllegalArgumentException(emsg);
             }
+
+            setGlobalWaitTimet();
+            setGlobalRetryCount();
+            setGlobalImageSimilar();
         }
     }
 
@@ -99,6 +105,18 @@ public class GlobalConfigReader {
 
     public static double getImageSimilar() {
         return imageSimilar;
+    }
+
+    private static void setGlobalWaitTimet() {
+        Variables.DEFAULT_WAIT_TIME_IN_MILLIS = GlobalConfigReader.getWaitTime();
+    }
+
+    private static void setGlobalRetryCount() {
+        Variables.RETRYCOUNT = GlobalConfigReader.getRetryCount();
+    }
+
+    private static void setGlobalImageSimilar() {
+        Variables.IMAGESIMILAR = GlobalConfigReader.getImageSimilar();
     }
 
     /**
@@ -119,5 +137,13 @@ public class GlobalConfigReader {
             logger.warn("IOException:" + propertyFileName);
         }
         return properties;
+    }
+
+    public static void main(String[] agrs) throws Exception {
+        GlobalConfigReader.readConfig();
+        System.out.println(GlobalConfigReader.getRetryCount());
+        System.out.println(GlobalConfigReader.getImageSimilar());
+        System.out.println(GlobalConfigReader.getWaitTime());
+
     }
 }

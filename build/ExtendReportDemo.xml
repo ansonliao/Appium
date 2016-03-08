@@ -7,7 +7,7 @@
         </classes>
     </test>
     <listeners>
-        <listener class-name="com.maaii.automation.exception.ScreenshotListerOnFailure" />
+        <listener class-name="com.maaii.automation.exception.ScreenshotListenerOnFailure" />
     </listeners>
     <usedefaultlisteners name="false" />
 </suite> <!-- Suite -->

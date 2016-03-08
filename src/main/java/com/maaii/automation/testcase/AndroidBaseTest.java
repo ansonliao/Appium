@@ -11,10 +11,12 @@ import com.maaii.automation.page.Page1;
 import com.maaii.automation.selenium.ExtendWebElement;
 import com.maaii.automation.selenium.WebDriverManager;
 import com.maaii.automation.utils.ConfigReader;
+import com.maaii.automation.utils.Utils;
 import com.maaii.automation.utils.extentreport.ExtentTestUtil;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import com.relevantcodes.extentreports.utils.ExtentUtil;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
@@ -46,7 +48,6 @@ public class AndroidBaseTest {
     public void beforeClass() throws IOException {
         driver = AndroidDriverManager.getInstance();
         page = new Page("src/test/Resources/config/maaii.yaml");
-//        Variables.TEST_TYPE = "ANDROID";
         Variables.TEST_TYPE = TestPlatform.ANDROID;
     }
 
@@ -60,7 +61,7 @@ public class AndroidBaseTest {
         }
 
         test = ExtentTestManager.getTest();
-        ExtentTestUtil.LogInfo("TEST START: " + method.getName() + " [method].");
+        ExtentTestUtil.LogInfo(Utils.toBold("TEST START: ") + Utils.withPre(method.getName() + " [method]"));
 
         /**
          * TODO: insert test case author here
@@ -73,25 +74,31 @@ public class AndroidBaseTest {
 
         String className = iTestResult.getTestClass().getRealClass().toString().trim();
 
-        ExtentTestManager.getTest().getTest().setStartedTime(getTime(iTestResult.getStartMillis()));
-        ExtentTestManager.getTest().getTest().setEndedTime(getTime(iTestResult.getEndMillis()));
+        ExtentTestUtil.setStartedTime(getTime(iTestResult.getStartMillis()));
+        ExtentTestUtil.setStartedTime(getTime(iTestResult.getEndMillis()));
 
         switch (iTestResult.getStatus()) {
             case ExtentTestResult.PASS:
-                ExtentTestManager.getTest().log(LogStatus.PASS, "Test Passed");
-                ExtentTestUtil.LogPass("TEST END with PASS: " + iTestResult.getMethod().getMethodName() + " [method].");
+                ExtentTestUtil.LogPass(Utils.toBold("TEST PASSED"));
+                ExtentTestUtil.LogPass(
+                        Utils.toBold("TEST END with PASS: ") +
+                        Utils.withPre(iTestResult.getMethod().getMethodName() + " [method]"));
                 break;
             case ExtentTestResult.FAIL:
-                ExtentTestManager.getTest().log(LogStatus.FAIL, getStackTrace(iTestResult.getThrowable()));
-                ExtentTestUtil.LogFail("TEST END with FAIL: " + iTestResult.getMethod().getMethodName() + " [method].");
+                ExtentTestUtil.LogFail(Utils.withPre(getStackTrace(iTestResult.getThrowable())));
+                ExtentTestUtil.LogFail(
+                        Utils.toBold("TEST END with FAIL: ") +
+                        Utils.withPre(iTestResult.getMethod().getMethodName() + " [method]"));
                 break;
             case ExtentTestResult.SKIP:
-                ExtentTestManager.getTest().log(LogStatus.SKIP, "Test Skipped");
-                ExtentTestUtil.LogSkip("TEST END with SKIP: " + iTestResult.getMethod().getMethodName() + " [method].");
+                ExtentTestUtil.LogSkip(Utils.toBold("Teest Skipped"));
+                ExtentTestUtil.LogSkip(
+                        Utils.toBold("TEST END with SKIP: ") +
+                        Utils.withPre(iTestResult.getMethod().getMethodName() + " [method]"));
                 break;
 
             default:
-                ExtentTestManager.getTest().log(LogStatus.PASS, "Test Passed");
+                ExtentTestUtil.LogPass("Test Passed");
         }
 
         ExtentTestManager.closeTest();

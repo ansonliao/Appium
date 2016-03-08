@@ -1,6 +1,7 @@
 package com.maaii.automation.utils;
 
 import com.maaii.automation.commons.Constants;
+import com.maaii.automation.commons.LOCATORFIELD;
 import com.maaii.automation.shell.ShellUtil;
 
 import java.io.File;
@@ -27,4 +28,13 @@ public class Utils {
     public static synchronized String removeAllSpace(String str) {
         return str.isEmpty() ? null : str.replaceAll(" ", "");
     }
+
+    public static synchronized String toBold(String str) {
+        return str.trim().isEmpty() ? null : "<span style='font-weight:bold;'>" + str + "</span>";
+    }
+
+    public static synchronized String withPre(String str) {
+        return str.trim().isEmpty() ?  null : "<pre>" + str + "</pre>";
+    }
+
 }

@@ -9,12 +9,14 @@ import com.maaii.automation.exception.IllegalLocatorIndexException;
 import com.maaii.automation.exception.LocatorDisplayException;
 import com.maaii.automation.exception.NoSuchLocatorException;
 import com.maaii.automation.exception.NoSuchLocatorExistException;
+import com.maaii.automation.extentreport.Factory.ExtentTestManager;
 import com.maaii.automation.file.YamlParser;
 import com.maaii.automation.ios.ExpectedConditionForIOS;
 import com.maaii.automation.ios.IOSDriverManager;
 import com.maaii.automation.ios.IOSDriverWait;
 import com.maaii.automation.selenium.ExtendWebElement;
 import com.maaii.automation.selenium.WebDriverManager;
+import com.maaii.automation.utils.extentreport.ExtentTestUtil;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -170,7 +172,8 @@ public class Page {
 
         if (!waitLocatorToBeDisplayed(element)) {
             element = null;
-            System.out.println("element is null.");
+//            System.out.println("element is null.");
+            ExtentTestUtil.LogWarning("Element is null");
         }
 
         //debug

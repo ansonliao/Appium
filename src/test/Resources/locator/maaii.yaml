@@ -11,19 +11,24 @@ continueBtn:
 phoneCallAllowBtn:
   type: "id"
   value: "com.android.packageinstaller:id/permission_allow_button"
-  desc: "Accept phone call permission button"
+  desc: "Phone call permission [Accept] button"
 
 contactAllowBtn:
   type: "id"
   value: "com.android.packageinstaller:id/permission_allow_button"
-  desc: "Accept access contacts button"
+  desc: "Access contacts permission [Accept] button"
 
 countryCodeSelector:
   type: "id"
   value: "com.maaii.test:id/country_code_field"
-  desc: "Register information input page --> Country/Region selector"
+  desc: "Register information input page --> [Country/Region] selector"
 
 countrySearch:
+  type: "name"
+  value: "Search"
+  desc: "Country/Region list page --> [Search] button"
+
+countrySearch1:
   type: "xpath"
   value: "//android.widget.LinearLayout[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.widget.FrameLayout[1]/android.view.ViewGroup[1]/android.support.v7.widget.LinearLayoutCompat[1]/android.widget.TextView[1]"
   desc: "Country/Region list page --> [Search] button"
@@ -31,7 +36,7 @@ countrySearch:
 countryInput:
   type: "id"
   value: "android:id/search_src_text"
-  desc: "Country/Region list page --> [Country/Region] search input input"
+  desc: "Country/Region list page --> [Country/Region] search input"
 
 hkRegion:
   type: "id"
@@ -53,6 +58,11 @@ continueBtn2:
   type: "id"
   value: "com.maaii.test:id/continue_button"
   desc: "Register information input page --> [Continue] button"
+
+toturialPageSkip:
+  type: "id"
+  value: "com.maaii.test:id/btn_skip"
+  desc: "Tutorial page --> [Skip] button"
 
 registerConfirm:
   type: "id"
@@ -82,9 +92,9 @@ userName:
 userName2:
   type: "id"
   value: "com.maaii.test:id/userName2"
-  desc: "User Profile page --> [User Name] textview in detail information"
+  desc: "User Profile details --> [User Name] textview"
 
 userPhone:
   type: "id"
   value: "com.maaii.test:id/tv_myNumber"
-  desc: "User Profile page --> [User phone] textview in detail information"
+  desc: "User Profile details --> [User phone] textview"

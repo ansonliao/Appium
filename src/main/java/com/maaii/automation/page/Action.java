@@ -6,10 +6,12 @@ import com.maaii.automation.commons.TestPlatform;
 import com.maaii.automation.commons.Variables;
 import com.maaii.automation.ios.IOSDriverManager;
 import com.maaii.automation.selenium.ExtendWebElement;
+import com.maaii.automation.utils.Utils;
 import com.maaii.automation.utils.extentreport.ExtentTestUtil;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import org.apache.poi.hpsf.Util;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 
@@ -20,15 +22,29 @@ public class Action {
 
     public synchronized static void type(ExtendWebElement extendWebElement, String text) {
         extendWebElement.getElement().sendKeys(text);
-//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Type [" + text + "].");
-        ExtentTestUtil.LogInfo("Type Action: [" + text + "]; Locator: " + extendWebElement.getDesc());
+
+        ExtentTestUtil.LogInfo(
+                Utils.toBold("Type: ") +
+                Utils.withPre(text) +
+                Utils.toBold("Locator: ") +
+                Utils.withPre(extendWebElement.getDesc()));
     }
 
     public synchronized static void clearAndType(ExtendWebElement extendWebElement, String text) {
         extendWebElement.getElement().clear();
         extendWebElement.getElement().sendKeys(text);
-//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": ClearAndType [" + text + "].");
-        ExtentTestUtil.LogInfo("ClearAndType Action: [" + text + "]; Locator: " + extendWebElement.getDesc());
+
+//        String logMsg = "<span style='font-weight:bold;'>Type: </span>" +
+//                "<pre>" + text + "</pre>, " + "<span style='font-weight:bold;'>Locator: </span><pre>" +
+//                extendWebElement.getDesc() + "</pre>";
+
+        ExtentTestUtil.LogInfo(Utils.toBold("Type: ") +
+                Utils.withPre(text) +
+                Utils.toBold("Locator: ") +
+                Utils.withPre(extendWebElement.getDesc())
+
+        );
+//        ExtentTestUtil.LogInfo("Type: " + text + ", " + extendWebElement.getDesc());
     }
 
     public static synchronized void typeByAppend(ExtendWebElement extendWebElement, String text) {
@@ -36,14 +52,25 @@ public class Action {
         String newValueString = oldValueString + text;
         extendWebElement.getElement().sendKeys(newValueString);
 
-//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": TypeByAppend, after typed, the text field is [" + newValueString + "].");
-        ExtentTestUtil.LogInfo("TypeByAppend: [" + text + "]; Locator: " + extendWebElement.getDesc());
+//        String logMsg = "<span style='font-weight:bold;'>Type by Append: </span><pre>" +
+//                newValueString + "</pre>, " + "<span style='font-weight:bold;'>Locator: </span><pre>" +
+//                extendWebElement.getDesc() + "</pre>";
+        ExtentTestUtil.LogInfo(
+                Utils.toBold("Type by Append: ") +
+                        Utils.withPre(newValueString) +
+                        Utils.toBold("Locator: ") +
+                        Utils.withPre(extendWebElement.getDesc())
+                    );
+//        ExtentTestUtil.LogInfo("Type: " + newValueString + ", " + extendWebElement.getDesc());
     }
 
     public static synchronized void click(ExtendWebElement extendWebElement) {
         extendWebElement.getElement().click();
-//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Click action.");
-        ExtentTestUtil.LogInfo("Click Action: " + extendWebElement.getDesc());
+
+//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ", Click Action.");
+//        String logMsg = "<span style='font-weight:bold;'>Click: </span><pre>" +
+//                 extendWebElement + "</pre>";
+        ExtentTestUtil.LogInfo(Utils.toBold("Click: ") + Utils.withPre(extendWebElement.getDesc()));
     }
 
     /**
@@ -54,20 +81,32 @@ public class Action {
      */
     public static synchronized void clickAndWait(ExtendWebElement extendWebElement, int sleepTime) throws InterruptedException {
         extendWebElement.getElement().click();
-//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": ClickAndWait [wait " + sleepTime + " ms]." );
-        ExtentTestUtil.LogInfo("ClickAndWait: " + extendWebElement + "; Wait: " + sleepTime + "ms");
+
+//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ", Click and Wait " + sleepTime + "ms");
+//        ExtentTestUtil.LogInfo("ClickAndWait: " + extendWebElement.getDesc() + ", " + sleepTime + "ms");
+        ExtentTestUtil.LogInfo(
+                Utils.toBold("Click And Wait: ") +
+                        Utils.withPre(sleepTime + "ms") +
+                        Utils.toBold("Loator: ") +
+                        Utils.withPre(extendWebElement.getDesc())
+        );
         Thread.sleep(sleepTime);
     }
 
     public static synchronized void clear(ExtendWebElement extendWebElement) {
         extendWebElement.getElement().clear();
-//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ": Clear text field.");
-        ExtentTestUtil.LogInfo("Clear text field Action: " + extendWebElement.getDesc());
+
+//        ExtentTestUtil.LogInfo(extendWebElement.getDesc() + ", Clear text field action");
+//        ExtentTestUtil.LogInfo("Clear: " + extendWebElement.getDesc());
+        ExtentTestUtil.LogInfo(
+                Utils.toBold("Clear: ") +
+                        Utils.withPre(extendWebElement.getDesc())
+        );
     }
 
     public static synchronized void swipeDirection(SWIPEDIRECTION direction) throws InterruptedException {
         int startX, startY, endX, endY;
-        int duraction = 2000;
+        int duraction = 1000;
         String logMsg = null;
 
         AppiumDriver driver = null;
@@ -92,47 +131,56 @@ public class Action {
             case UP:
                 startX = screenSize.width/2;
                 endX = startX;
-                startY = (screenSize.height/10)*8;
-                endY = (screenSize.height/10)*2;
+                startY = (screenSize.height/10)*9;
+                endY = (screenSize.height/10)*1;
 
                 driver.swipe(startX, startY, endX, endY, duraction);
-                logMsg = "SWIPE UP: [startX: " + startX + ", startY: " + startY +
-                        ", endX: " + endX + ", endY: " + endY + ", duration: 1000ms" + "] ";
+                logMsg = Utils.toBold("SWIPE UP: ") +
+                        Utils.withPre(
+                                "startX: " + startX + ", startY: " + startY +
+                                ", endX: " + endX + ", endY: " + endY +
+                                ", duration:" + duraction + "ms");
                 ExtentTestUtil.LogInfo(logMsg);
-                System.out.println(logMsg);
                 break;
             case DOWN:
                 startX = screenSize.width/2;
                 endX = startX;
-                startY = (screenSize.height/10)*2;
-                endY = (screenSize.height/10)*8;
+                startY = (screenSize.height/10)*1;
+                endY = (screenSize.height/10)*9;
                 driver.swipe(startX, startY, endX, endY, duraction);
-                logMsg = "SWIPE DOWN: [startX: " + startX + ", startY: " + startY +
-                        ", endX: " + endX + ", endY: " + endY + ", duration: 1000ms" + "] ";
+                logMsg = Utils.toBold("SWIPE DOWN: ") +
+                        Utils.withPre(
+                                "startX: " + startX + ", startY: " + startY +
+                                ", endX: " + endX + ", endY: " + endY +
+                                ", duration: " + duraction + "ms"
+                        );
                 ExtentTestUtil.LogInfo(logMsg);
-                System.out.println(logMsg);
                 break;
             case LEFT:
-                startX = (screenSize.width/10)*2;
-                endX = (screenSize.width/10)*8;
+                startX = (screenSize.width/10)*1;
+                endX = (screenSize.width/10)*9;
                 startY = screenSize.height/2;
                 endY = startY;
                 driver.swipe(startX, startY, endX, endY, duraction);
-                logMsg = "SWIPE LEFT: [startX: " + startX + ", startY: " + startY +
-                        ", endX: " + endX + ", endY: " + endY + ", duration: 1000ms" + "] ";
+                logMsg = Utils.toBold("SWIPE LEFT: ") +
+                        Utils.withPre(
+                                "startX: " + startX + ", startY: " + startY +
+                                ", endX: " + endX + ", endY: " + endY + ", duration: " + duraction + "ms"
+                        );
                 ExtentTestUtil.LogInfo(logMsg);
-                System.out.println(logMsg);
                 break;
             default:
-                startX = (screenSize.width/10)*8;
-                endX = (screenSize.width/10)*2;
+                startX = (screenSize.width/10)*9;
+                endX = (screenSize.width/10)*1;
                 startY = screenSize.height/2;
                 endY = startY;
                 driver.swipe(startX, startY, endX, endY, duraction);
-                logMsg = "SWIPE RIGHT: [startX: " + startX + ", startY: " + startY +
-                        ", endX: " + endX + ", endY: " + endY + ", duration: 1000ms" + "] ";
+                logMsg = Utils.toBold("SWIPE RIGHT: ") +
+                        Utils.withPre(
+                                "startX: " + startX + ", startY: " + startY +
+                                ", endX: " + endX + ", endY: " + endY + ", duration: " + duraction + "ms"
+                        );
                 ExtentTestUtil.LogInfo(logMsg);
-                System.out.println(logMsg);
                 break;
 
         }

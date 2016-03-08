@@ -1,5 +1,6 @@
 package ANDROID;
 
+import com.maaii.automation.annotation.Description;
 import com.maaii.automation.commons.SWIPEDIRECTION;
 import com.maaii.automation.exception.IllegalLocatorIndexException;
 import com.maaii.automation.exception.LocatorDisplayException;
@@ -16,22 +17,23 @@ import org.testng.annotations.Test;
  */
 public class maaii extends AndroidBaseTest {
 
-    @Test
-    public void f1() throws IllegalLocatorIndexException, NoSuchLocatorExistException, LocatorDisplayException, NoSuchLocatorException, InterruptedException {
+    @Test(description = "New user in register flow", groups = {"Function Test"})
+    public void testcaseRegister() throws IllegalLocatorIndexException, NoSuchLocatorExistException, LocatorDisplayException, NoSuchLocatorException, InterruptedException {
         Action.click(page.getExtElement("continueBtn"));
-        Action.click(page.getExtElement("phoneCallAllowBtn"));
-        Action.click(page.getExtElement("contactAllowBtn"));
+//        Action.click(page.getExtElement("phoneCallAllowBtn"));
+//        Action.click(page.getExtElement("contactAllowBtn"));
         Action.click(page.getExtElement("countryCodeSelector"));
 
         Action.click(page.getExtElement("countrySearch"));
-        Action.type(page.getExtElement("countryInput"), "hong kong");
+        Action.type(page.getExtElement("countryInput"), "hong");
         Action.click(page.getExtElement("hkRegion"));
 
-        Action.type(page.getExtElement("phoneNoInput"), "68795634");
+        Action.type(page.getExtElement("phoneNoInput"), "68795625");
         Action.type(page.getExtElement("userNameInput"), "testing");
         Action.click(page.getExtElement("continueBtn2"));
         Action.click(page.getExtElement("registerConfirm"));
         Action.click(page.getExtElement("connect2FBSkip"));
+//        Action.clickAndWait(page.getExtElement("toturialPageSkip"), 1000);
         Action.swipeDirection(SWIPEDIRECTION.RIGHT);
         Action.swipeDirection(SWIPEDIRECTION.RIGHT);
         Action.swipeDirection(SWIPEDIRECTION.RIGHT);
@@ -44,6 +46,6 @@ public class maaii extends AndroidBaseTest {
         Assert.assertTrue(Utils.removeAllSpace(page.getElement("userPhone").getText()).contains("+852"), "Register region incorrect, expect: [Hong Kong] with [+852].");
 
         // fail case
-        Assert.assertTrue(Utils.removeAllSpace(page.getElement("userPhone").getText()).contains("68795635"), "Register user phone incorrect.");
+        Assert.assertTrue(Utils.removeAllSpace(page.getElement("userPhone").getText()).contains("68795625"), "Register user phone incorrect.");
     }
 }

@@ -6,9 +6,7 @@ package com.maaii.automation.exception;
 public class ExceptionBase extends Exception {
     public ExceptionBase(String message) {
         super(
-                "\n************************************************************************************************\n" +
-                message +
-                "\n************************************************************************************************"
+                "\n ----> " + message + " <----\n"
         );
     }
 
