@@ -70,8 +70,6 @@ public class AndroidBaseTest {
 
     @AfterMethod
     public void afterEachTestMethod(ITestResult iTestResult) {
-//        AndroidDriverManager.quitDriver();
-
         String className = iTestResult.getTestClass().getRealClass().toString().trim();
 
         ExtentTestUtil.setStartedTime(getTime(iTestResult.getStartMillis()));
