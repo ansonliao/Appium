@@ -63,7 +63,7 @@ public class AndroidBaseTest {
          */
         if (AnnotationParser.annotationExistForMethod(className, method, Annotations.Author)) {
             Author author = (Author) AnnotationParser.getMethodAnnotation(className, method, Annotations.Author);
-            ExtentTestManager.getTest().assignAuthor(author.name() + " - " + author.group());
+            ExtentTestManager.getTest().assignAuthor(author.name() + " - " + author.group());Tes
         }
 
         test = ExtentTestManager.getTest();
