@@ -1,5 +1,6 @@
 package ANDROID;
 
+import com.maaii.automation.annotation.Author;
 import com.maaii.automation.annotation.Description;
 import com.maaii.automation.commons.SWIPEDIRECTION;
 import com.maaii.automation.exception.IllegalLocatorIndexException;
@@ -17,6 +18,7 @@ import org.testng.annotations.Test;
  */
 public class maaii extends AndroidBaseTest {
 
+    @Author(name = "Anson Liao", group = "Automation Team")
     @Test(description = "New user in register flow", groups = {"Function Test"})
     public void testcaseRegister() throws IllegalLocatorIndexException, NoSuchLocatorExistException, LocatorDisplayException, NoSuchLocatorException, InterruptedException {
         Action.click(page.getExtElement("continueBtn"));

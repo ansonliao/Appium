@@ -1,6 +1,9 @@
 package com.maaii.automation.testcase;
 
 import com.maaii.automation.android.AndroidDriverManager;
+import com.maaii.automation.annotation.AnnotationParser;
+import com.maaii.automation.annotation.Author;
+import com.maaii.automation.commons.Annotations;
 import com.maaii.automation.commons.ExtentTestResult;
 import com.maaii.automation.commons.TestPlatform;
 import com.maaii.automation.commons.Variables;
@@ -47,20 +50,26 @@ public class AndroidBaseTest {
 
     @BeforeMethod
     public void startEachTestMethod(Method method) {
+        String className = method.getDeclaringClass().toString().trim().split(" ")[1];
         ExtentTestManager.startTest(method.getName(), getMethodDesc(method));
-        System.out.println("Calling class name: " + method.getClass());
 
         // Test categories assigned
         if (getMethodGroups(method) != null) {
             ExtentTestManager.getTest().assignCategory(getMethodGroups(method));
         }
 
-        test = ExtentTestManager.getTest();
-        ExtentTestUtil.LogInfo(Utils.toBold("TEST START"), Utils.withPre(method.getName() + " [method]"));
-
         /**
          * TODO: insert test case author here
          */
+        if (AnnotationParser.annotationExistForMethod(className, method, Annotations.Author)) {
+            Author author = (Author) AnnotationParser.getMethodAnnotation(className, method, Annotations.Author);
+            ExtentTestManager.getTest().assignAuthor(author.name() + " - " + author.group());
+        }
+
+        test = ExtentTestManager.getTest();
+        ExtentTestUtil.LogInfo(Utils.toBold("TEST START"), Utils.withPre(method.getName() + " [method]"));
+
+
     }
 
     @AfterMethod
