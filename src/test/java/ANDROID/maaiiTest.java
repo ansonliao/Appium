@@ -8,6 +8,7 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.*;
+import org.testng.annotations.Test;
 
 import java.io.File;
 import java.net.MalformedURLException;

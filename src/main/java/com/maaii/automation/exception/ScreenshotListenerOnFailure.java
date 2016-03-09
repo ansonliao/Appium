@@ -17,12 +17,7 @@ public class ScreenshotListenerOnFailure extends TestListenerAdapter {
         ITestContext iTestContext = iTestResult.getTestContext();
         String screenshotFile = Snapshot.takeScreenShot(iTestContext);
 
-//        ExtentTestManager.getTest().log(
-//                LogStatus.FAIL, "Failure Screenshot below: "
-//                + ExtentTestManager.getTest().addScreenCapture(screenshotFile)
-//        );
-
-        ExtentTestUtil.LogFail(Utils.toBold("Test was fail and failure sceenshot attached below:")
+        ExtentTestUtil.LogFail(Utils.toBold("FAIL"), Utils.toBold("Test was fail and failure sceenshot attached below:")
                 + ExtentTestManager.getTest().addScreenCapture(screenshotFile));
     }
 }

@@ -55,7 +55,7 @@ public class GlobalConfigReader {
                     retryCount = Integer.parseInt(sRetryCount);
                 } catch (final NumberFormatException e) {
                     String emsg = "Parse " + RETRYCOUNT + " [" + sRetryCount + "] from String to Int Exception.";
-                    ExtentTestUtil.LogError(emsg);
+                    ExtentTestUtil.LogError(Utils.toBold("ERROR"), Utils.withPre(emsg));
                     throw new NumberFormatException(emsg);
                 }
             }
@@ -67,7 +67,7 @@ public class GlobalConfigReader {
                 }
                 catch (final NumberFormatException e) {
                    String emsg =  "Parse " + WAITTIME + " [" + sWaitTime + "] from String to Int Exception.";
-                    ExtentTestUtil.LogError(emsg);
+                    ExtentTestUtil.LogError(Utils.toBold("ERROR"), Utils.withPre(emsg));
                     throw new NumberFormatException(emsg);
                 }
             }
@@ -79,7 +79,7 @@ public class GlobalConfigReader {
                 }
                 catch (final NumberFormatException e) {
                     String emsg =  "Parse " + IMGSIMILAR + " [" + sImageSimilar + "] from String to Int Exception.";
-                    ExtentTestUtil.LogError(emsg);
+                    ExtentTestUtil.LogError(Utils.toBold("ERROR"), Utils.withPre(emsg));
                     throw new NumberFormatException(emsg);
                 }
             }

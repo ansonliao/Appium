@@ -116,7 +116,7 @@ public class ConfigReader {
                     retryCount = Integer.parseInt(sRetryCount);
                 } catch (final NumberFormatException e) {
                     String emsg = "Parse " + RETRYCOUNT + " [" + sRetryCount + "] from String to Int Exception.";
-                    ExtentTestUtil.LogError(emsg);
+                    ExtentTestUtil.LogError(Utils.toBold("ERROR"), Utils.withPre(emsg));
                     throw new NumberFormatException(emsg);
                 }
             }

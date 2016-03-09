@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * @author ansonliao
  */
 
-@Target(ElementType.METHOD)
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Author {

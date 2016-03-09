@@ -11,57 +11,55 @@ import java.util.Date;
  * Created by ansonliao on 18/12/2015.
  */
 public class ExtentTestUtil {
-    public static synchronized void LogInfo(String logInfo) {
+    public static synchronized void LogInfo(String stepName, String logInfo) {
         ExtentTest test = ExtentTestManager.getTest();
 
-        test.log(LogStatus.INFO, logInfo);
+        test.log(LogStatus.INFO, stepName, logInfo);
     }
 
-    public static synchronized void LogPass(String logInfo) {
+    public static synchronized void LogPass(String stepName, String logInfo) {
         ExtentTest test = ExtentTestManager.getTest();
 
-        test.log(LogStatus.PASS, logInfo);
+        test.log(LogStatus.PASS, stepName, logInfo);
     }
 
-    public static synchronized void LogFail(String logInfo) {
+    public static synchronized void LogFail(String stepName, String logInfo) {
         ExtentTest test = ExtentTestManager.getTest();
 
-        test.log(LogStatus.FAIL, logInfo);
+        test.log(LogStatus.FAIL, stepName, logInfo);
     }
 
-    public static synchronized void LogSkip(String logInfo) {
+    public static synchronized void LogSkip(String stepName, String logInfo) {
         ExtentTest test = ExtentTestManager.getTest();
 
-        test.log(LogStatus.SKIP, logInfo);
+        test.log(LogStatus.SKIP, stepName, logInfo);
     }
 
-    public static synchronized void LogError(String logInfo) {
+    public static synchronized void LogError(String stepName, String logInfo) {
         ExtentTest test = ExtentTestManager.getTest();
 
-        test.log(LogStatus.ERROR, logInfo);
+        test.log(LogStatus.ERROR, stepName, logInfo);
     }
 
-    public static synchronized void LogUnknown(String logInfo) {
+    public static synchronized void LogUnknown(String stepName, String logInfo) {
         ExtentTest test = ExtentTestManager.getTest();
 
-        test.log(LogStatus.UNKNOWN, logInfo);
+        test.log(LogStatus.UNKNOWN, stepName, logInfo);
     }
 
-    public static synchronized void LogWarning(String logInfo) {
+    public static synchronized void LogWarning(String stepName, String logInfo) {
         ExtentTest test = ExtentTestManager.getTest();
 
-        test.log(LogStatus.WARNING, logInfo);
+        test.log(LogStatus.WARNING, stepName, logInfo);
     }
 
     public static synchronized void setStartedTime(Date date) {
         ExtentTest test = ExtentTestManager.getTest();
-//        ExtentTestUtil.LogInfo(Utils.toBold("Set Test Started Time: " )+ Utils.withPre(date.toString()));
         test.setStartedTime(date);
     }
 
     public static synchronized void setEndedTime(Date date) {
         ExtentTest test =ExtentTestManager.getTest();
-//        ExtentTestUtil.LogInfo(Utils.toBold("Set Test Ended Time: ") + Utils.withPre(date.toString()));
         test.setEndedTime(date);
     }
 

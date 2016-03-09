@@ -7,18 +7,11 @@ import com.maaii.automation.commons.Variables;
 import com.maaii.automation.extentreport.Factory.ExtentManager;
 import com.maaii.automation.extentreport.Factory.ExtentTestManager;
 import com.maaii.automation.page.Page;
-import com.maaii.automation.page.Page1;
-import com.maaii.automation.selenium.ExtendWebElement;
-import com.maaii.automation.selenium.WebDriverManager;
-import com.maaii.automation.utils.ConfigReader;
 import com.maaii.automation.utils.Utils;
 import com.maaii.automation.utils.extentreport.ExtentTestUtil;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
-import com.relevantcodes.extentreports.LogStatus;
-import com.relevantcodes.extentreports.utils.ExtentUtil;
 import io.appium.java_client.android.AndroidDriver;
-import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -28,6 +21,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.logging.MemoryHandler;
 
 /**
  * Created by ansonliao on 3/3/2016.
@@ -54,6 +48,7 @@ public class AndroidBaseTest {
     @BeforeMethod
     public void startEachTestMethod(Method method) {
         ExtentTestManager.startTest(method.getName(), getMethodDesc(method));
+        System.out.println("Calling class name: " + method.getClass());
 
         // Test categories assigned
         if (getMethodGroups(method) != null) {
@@ -61,7 +56,7 @@ public class AndroidBaseTest {
         }
 
         test = ExtentTestManager.getTest();
-        ExtentTestUtil.LogInfo(Utils.toBold("TEST START: ") + Utils.withPre(method.getName() + " [method]"));
+        ExtentTestUtil.LogInfo(Utils.toBold("TEST START"), Utils.withPre(method.getName() + " [method]"));
 
         /**
          * TODO: insert test case author here
@@ -77,26 +72,26 @@ public class AndroidBaseTest {
 
         switch (iTestResult.getStatus()) {
             case ExtentTestResult.PASS:
-                ExtentTestUtil.LogPass(Utils.toBold("TEST PASSED"));
-                ExtentTestUtil.LogPass(
-                        Utils.toBold("TEST END with PASS: ") +
+                ExtentTestUtil.LogPass(Utils.toBold("PASS"),
+                        Utils.toBold("TEST END with PASS:") +
                         Utils.withPre(iTestResult.getMethod().getMethodName() + " [method]"));
                 break;
             case ExtentTestResult.FAIL:
-                ExtentTestUtil.LogFail(Utils.withPre(getStackTrace(iTestResult.getThrowable())));
+                ExtentTestUtil.LogFail(Utils.toBold("FAIL"),
+                        Utils.withPre(getStackTrace(iTestResult.getThrowable())));
                 ExtentTestUtil.LogFail(
-                        Utils.toBold("TEST END with FAIL: ") +
+                        Utils.toBold("FAIL"),
+                        Utils.toBold("TEST END with FAIL:") +
                         Utils.withPre(iTestResult.getMethod().getMethodName() + " [method]"));
                 break;
             case ExtentTestResult.SKIP:
-                ExtentTestUtil.LogSkip(Utils.toBold("Teest Skipped"));
-                ExtentTestUtil.LogSkip(
-                        Utils.toBold("TEST END with SKIP: ") +
+                ExtentTestUtil.LogSkip(Utils.toBold("SKIP"),
+                        Utils.toBold("TEST Skipped:") +
                         Utils.withPre(iTestResult.getMethod().getMethodName() + " [method]"));
                 break;
 
             default:
-                ExtentTestUtil.LogPass("Test Passed");
+                ExtentTestUtil.LogPass("PASS", "Test Passed");
         }
 
         ExtentTestManager.closeTest();
@@ -156,5 +151,9 @@ public class AndroidBaseTest {
         calendar.setTimeInMillis(millis);
 
         return calendar.getTime();
+    }
+
+    private synchronized String getDeclaringClassName(Method method) {
+        return method.getDeclaringClass().toString().trim().split(" ")[1];
     }
 }

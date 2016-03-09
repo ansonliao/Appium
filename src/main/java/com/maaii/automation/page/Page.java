@@ -16,6 +16,7 @@ import com.maaii.automation.ios.IOSDriverManager;
 import com.maaii.automation.ios.IOSDriverWait;
 import com.maaii.automation.selenium.ExtendWebElement;
 import com.maaii.automation.selenium.WebDriverManager;
+import com.maaii.automation.utils.Utils;
 import com.maaii.automation.utils.extentreport.ExtentTestUtil;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
@@ -173,7 +174,7 @@ public class Page {
         if (!waitLocatorToBeDisplayed(element)) {
             element = null;
 //            System.out.println("element is null.");
-            ExtentTestUtil.LogWarning("Element is null");
+            ExtentTestUtil.LogWarning(Utils.toBold("WARNING"), Utils.withPre("Element is null: " + by.toString()));
         }
 
         //debug
