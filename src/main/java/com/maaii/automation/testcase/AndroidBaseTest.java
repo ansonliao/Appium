@@ -24,7 +24,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.logging.MemoryHandler;
 
 /**
  * Created by ansonliao on 3/3/2016.
@@ -63,7 +62,7 @@ public class AndroidBaseTest {
          */
         if (AnnotationParser.annotationExistForMethod(className, method, Annotations.Author)) {
             Author author = (Author) AnnotationParser.getMethodAnnotation(className, method, Annotations.Author);
-            ExtentTestManager.getTest().assignAuthor(author.name() + " - " + author.group());Tes
+            ExtentTestManager.getTest().assignAuthor(author.name() + " - " + author.group());
         }
 
         test = ExtentTestManager.getTest();
