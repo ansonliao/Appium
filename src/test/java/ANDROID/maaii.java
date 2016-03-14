@@ -1,6 +1,7 @@
 package ANDROID;
 
 import com.maaii.automation.annotation.Author;
+import com.maaii.automation.annotation.Configration;
 import com.maaii.automation.annotation.Description;
 import com.maaii.automation.commons.SWIPEDIRECTION;
 import com.maaii.automation.exception.IllegalLocatorIndexException;
@@ -16,6 +17,8 @@ import org.testng.annotations.Test;
 /**
  * Created by ansonliao on 4/3/2016.
  */
+
+@Configration("src/test/Resources/config/maaii.properties")
 public class maaii extends AndroidBaseTest {
 
     @Author(name = "Anson Liao", group = "Automation Team")

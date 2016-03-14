@@ -20,7 +20,8 @@
         mvn clean test -DxmlFileName=[TestNG xml file name] -DtestType=iOS|Android|Web -DjobName=${jobName}
         Sample:
         mvn clean test -DxmlFileName=sample4Web.xml -DtestType=Web -DjobName=demo -DbuildNumber=88
-
+        Sample
+        mvn clean test -DxmlFileName=sample4Android_testng.xml  -DjobName=demo -DbuildNumber=88
     -->
 
 

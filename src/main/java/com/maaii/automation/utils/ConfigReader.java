@@ -1,5 +1,6 @@
 package com.maaii.automation.utils;
 
+import com.maaii.automation.commons.Variables;
 import com.maaii.automation.extentreport.Factory.ExtentTestManager;
 import com.maaii.automation.utils.extentreport.ExtentTestUtil;
 import com.relevantcodes.extentreports.LogStatus;
@@ -16,18 +17,14 @@ import java.util.Properties;
  */
 public class ConfigReader {
     private static Logger logger = Logger.getLogger(ConfigReader.class);
-    private static ConfigReader cr;
     private int retryCount = 0;
     private String sourceCodeDir = "src";
-    private String sourceCodeEncoding = "UTF-8";
 
     private static final String RETRYCOUNT = "retryCount";
-    private static final String SOURCEDIR = "sourcecodedir";
-    private static final String SOURCEENCODING = "sourcecodeencoding";
     private static final String CONFIGFILE = "config/config.properties";
 
     private String testType;
-    private String locatorYamlFile;
+    private String locatorYamlFile = null;
     private int waitTime;
     private static final String TESTTYPE = "testtype";
     private static final String LOCATORYAMLFILE = "locatoryaml";
@@ -52,14 +49,19 @@ public class ConfigReader {
     private static final String PLATFORMVERSION = "platformversion";
 
     ConfigReader() {
-        readConfig(CONFIGFILE);
+        Long threadID = Utils.getThreadID();
+        String configFile = Variables.TestConfigMap.get(threadID);
+        readConfig(configFile);
+//        readConfig(CONFIGFILE);
     }
 
     public static ConfigReader getInstance() {
-        if(cr == null) {
-            cr = new ConfigReader();
-        }
-        return cr;
+//        if(cr == null) {
+//            cr = new ConfigReader();
+//        }
+//        return cr;
+
+        return new ConfigReader();
     }
 
     private void readConfig(String fileName) {
@@ -97,18 +99,10 @@ public class ConfigReader {
                 if (key.toLowerCase().equals(RETRYCOUNT)) {
                     sRetryCount = properties.getProperty(key);
                 }
-
                 if (key.toLowerCase().equals(WAITTIME)) {
                     waitTime = Integer.parseInt(properties.getProperty(key));
 
                 }
-
-//                if(key.toLowerCase().equals(SOURCEDIR)) {
-//                    sourceCodeDir = properties.getProperty(key);
-//                }
-//                if(key.toLowerCase().equals(SOURCEENCODING)) {
-//                    sourceCodeEncoding = properties.getProperty(key);
-//                }
             }
             if (sRetryCount != null) {
                 sRetryCount = sRetryCount.trim();

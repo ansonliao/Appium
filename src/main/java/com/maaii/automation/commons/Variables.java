@@ -32,4 +32,6 @@ public class Variables {
      */
     public static Map<Long, TestPlatform> TESTTYPEMAP = new HashMap<Long, TestPlatform>();
 
+    public static Map<Long, String> TestConfigMap = new HashMap<Long, String>();
+
 }

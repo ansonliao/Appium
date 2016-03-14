@@ -3,18 +3,23 @@ package com.maaii.automation.testcase;
 import com.maaii.automation.android.AndroidDriverManager;
 import com.maaii.automation.annotation.AnnotationParser;
 import com.maaii.automation.annotation.Author;
+import com.maaii.automation.annotation.Configration;
 import com.maaii.automation.commons.Annotations;
 import com.maaii.automation.commons.ExtentTestResult;
 import com.maaii.automation.commons.TestPlatform;
 import com.maaii.automation.commons.Variables;
+import com.maaii.automation.exception.ConfigurationException;
+import com.maaii.automation.exception.IllegalArgumentException;
 import com.maaii.automation.extentreport.Factory.ExtentManager;
 import com.maaii.automation.extentreport.Factory.ExtentTestManager;
 import com.maaii.automation.page.Page;
+import com.maaii.automation.utils.GlobalConfigReader;
 import com.maaii.automation.utils.Utils;
 import com.maaii.automation.utils.extentreport.ExtentTestUtil;
 import com.relevantcodes.extentreports.ExtentReports;
 import com.relevantcodes.extentreports.ExtentTest;
 import io.appium.java_client.android.AndroidDriver;
+import org.apache.xpath.operations.And;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -24,7 +29,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.logging.MemoryHandler;
 
 /**
  * Created by ansonliao on 3/3/2016.
@@ -35,16 +39,40 @@ public class AndroidBaseTest {
     protected AndroidDriver driver;
     protected Page page;
 
+    static {
+        try {
+            GlobalConfigReader.readConfig();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @BeforeSuite
-    public void extentSetup(ITestContext context) {
+    public void extentSetup(ITestContext context) throws IllegalArgumentException {
         ExtentManager.setOutPutDirectory(context);
         extent = ExtentManager.getInstance();
     }
 
     @BeforeClass
-    public void beforeClass() throws IOException {
+    public void beforeClass() throws IOException, ConfigurationException {
+        String className = this.getClass().getName();
+        if (!AnnotationParser.annotationExistForClass(className, Annotations.Configration)) {
+            throw new ConfigurationException("Test Case Class level configuration file was not found.[missed Configuration annotation in class level]");
+        }
+
+        Configration configration = (Configration) AnnotationParser.getClassAnnotation(className, Annotations.Configration);
+        String configFile = configration.value();
+        Variables.TestConfigMap.put(Utils.getThreadID(), configFile);
+
         driver = AndroidDriverManager.getInstance();
-        page = new Page("src/test/Resources/config/maaii.yaml");
+
+        if (AndroidDriverManager.getLocatorYaml() != null) {
+            System.out.println("Test Case Locator YAML: " + AndroidDriverManager.getLocatorYaml());
+//            page = new Page(AndroidDriverManager.getLocatorYaml());
+            page = new Page(configFile);
+        }
+
         Variables.TEST_TYPE = TestPlatform.ANDROID;
     }
 
